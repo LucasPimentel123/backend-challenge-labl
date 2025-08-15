@@ -1,0 +1,45 @@
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=dev
+      - PORT=3000
+      - DATABASE_URL=postgresql://labl_user:labl_password@labl_db:5432/labl_db
+    restart: unless-stopped
+    networks:
+      - app-connect
+    depends_on:
+      labl_db:
+        condition: service_healthy
+
+  labl_db:
+    container_name: labl_db
+    image: postgres:11
+    restart: unless-stopped
+    volumes:
+      - labl_db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=labl_db
+      - POSTGRES_USER=labl_user
+      - POSTGRES_PASSWORD=labl_password
+    ports:
+      - "5432:5432"
+    networks:
+      - app-connect
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U labl_user -d labl_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  labl_db-data:
+  exclude:
+
+networks:
+  app-connect:
+    driver: bridge
