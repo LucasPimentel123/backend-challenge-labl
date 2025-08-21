@@ -7,17 +7,24 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "ts-node src/server.ts",
-    "watch": "nodemon src/server.ts"
+    "watch": "nodemon src/server.ts",
+    "seed": "ts-node src/infrastructure/database/seeds/order-seed.ts"
   },
   "dependencies": {
     "@types/pino": "^7.0.4",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
     "express": "^4.18.2",
+    "pg": "^8.16.3",
     "pino": "^9.9.0",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3",
     "sequelize-typescript": "^2.1.6"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.0",
+    "@types/pg": "^8.15.5",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"

@@ -38,7 +38,6 @@ services:
 
 volumes:
   labl_db-data:
-  exclude:
 
 networks:
   app-connect:

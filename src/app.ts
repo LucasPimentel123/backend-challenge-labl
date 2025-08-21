@@ -1,6 +1,7 @@
 import express from 'express';
-import errorHandler from './infrastructure/config/error-handler.config';
 import db from './infrastructure/database/sequelize.config';
+import { routes } from './interfaces/api/routes';
+import errorHandler from './interfaces/api/middleware/error-handler.config';
 
 class App {
   public server: express.Application;
@@ -14,12 +15,17 @@ class App {
 
   async init(){
     this.middlewares();
+    this.routes();
     await this.database();
   }
 
   middlewares(){
     this.server.use(express.json());
     this.server.use(errorHandler);
+  }
+
+  routes(){
+    this.server.use(routes);
   }
 
   async database(){
